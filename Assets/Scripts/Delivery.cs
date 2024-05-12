@@ -8,23 +8,27 @@ public class Delivery : MonoBehaviour
     public Sprite[] sprites = new Sprite[2];
 
     bool isPlayerInsideTheTriggerArea;
-    GameObject pizza;
+    GameObject pizza, customer;
 
+    public SpawnController spawnController;
+
+    bool atPizzaArea; 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = sprites[0];
+        spawnController.InstantiateNumber(true);
     }
 
     void Update()
     {
         if (isPlayerInsideTheTriggerArea)
         {
-            if(Input.GetKeyDown(KeyCode.E) && !hasPackage)
+            if(Input.GetKeyDown(KeyCode.E) && !hasPackage && atPizzaArea)
             {               
                 PickUpPizza();
             }
-            else if(Input.GetKeyDown(KeyCode.E) && hasPackage)
+            else if(Input.GetKeyDown(KeyCode.E) && hasPackage && !atPizzaArea)
             {              
                 DeliverPizza();
             }
@@ -33,16 +37,25 @@ public class Delivery : MonoBehaviour
 
     void PickUpPizza()
     {
+        Debug.Log("Order Picked");
         hasPackage = true;
         Destroy(pizza, delayTime);
         isPlayerInsideTheTriggerArea = false;
-        Invoke("ChangeCar", delayTime);        
+        Invoke("ChangeCar", delayTime);
+        spawnController.InstantiateNumber(false);
+        spawnController.isSwapned = null;  
+
     }
 
     void DeliverPizza()
     {
+        Debug.Log("Order Delivered");
+        pizza = null;
         hasPackage = false;
-        Invoke("ChangeCar", delayTime);       
+        Destroy(customer, delayTime);
+        Invoke("ChangeCar", delayTime);
+        spawnController.InstantiateNumber(true);
+        spawnController.isSwapned = null;
     }
 
 
@@ -52,7 +65,21 @@ public class Delivery : MonoBehaviour
         {
             if (collision.gameObject.tag == "Pizza")
             {
-                pizza = collision.gameObject;
+                if (pizza == null)
+                {
+                    pizza = collision.gameObject;
+                }
+
+                atPizzaArea = true;
+            }
+
+            if (collision.gameObject.tag == "Customer")
+            {
+                if (customer == null)
+                {
+                    customer = collision.gameObject;
+                }
+                atPizzaArea = false;
             }
 
             isPlayerInsideTheTriggerArea = true;

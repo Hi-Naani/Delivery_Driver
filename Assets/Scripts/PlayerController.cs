@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
         if(_moveInput != 0)
         {
-            float _rotateInput = Input.GetAxisRaw("Horizontal");
+            float _rotateInput = Input.GetAxis("Horizontal");
             this.transform.Rotate(rotate * Time.deltaTime * rotateSpeed * _rotateInput);
         }
         

@@ -8,5 +8,6 @@ public class FollowCamera : MonoBehaviour
     void LateUpdate()
     {
         this.transform.position = player.transform.position + camOffset;
+        this.transform.rotation = player.transform.rotation;
     }
 }
