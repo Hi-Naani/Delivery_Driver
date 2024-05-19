@@ -1,8 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+
 
 public class SpawnController : MonoBehaviour
 {
@@ -62,7 +61,8 @@ public class SpawnController : MonoBehaviour
 
         // checkpoint to instantiate
         GameObject checkpointToInstantiate = checkPoints[InstantiateNumber(objectToInstantiate)];
-        //Instantiating the game Object
+
+        // Instantiating the game Object
         Instantiate(checkpointToInstantiate, _spawnObject.transform.position, Quaternion.identity);
     }
 
@@ -81,19 +81,5 @@ public class SpawnController : MonoBehaviour
 
     }
 
-    // Pick a random enum value
-    // ArrayType randomArrayType = (ArrayType)UnityEngine.Random.Range(0, Enum.GetValues(typeof(ArrayType)).Length);
-
-    // Get the array associated with the randomly selected enum value
-    //int[] randomArray = arrayDictionary[randomArrayType];
-
-    // Getting a random index within the array
-    //int randomIndex = UnityEngine.Random.Range(0, _randomArea.Length);
-
-    // Getting the GameObject at the random index
-   // GameObject _spawnObject = _randomArea[randomIndex];
-
-    // Spawn the selected GameObject
-    //Instantiate(_spawnObject, transform.position, Quaternion.identity);
 
 }
